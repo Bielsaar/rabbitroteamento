@@ -4,6 +4,8 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
+import java.time.LocalDateTime;
+
 public class EmitLogDirect {
 
     private static final String EXCHANGE_NAME = "direct_logs";
@@ -19,7 +21,7 @@ public class EmitLogDirect {
             String message = getMessage(argv);
 
             channel.basicPublish(EXCHANGE_NAME, severity, null, message.getBytes("UTF-8"));
-            System.out.println(" [x] Gabriel Enviou: '" + severity + "':'" + message + "'");
+            System.out.println(" [x] Gabriel Enviou: '" + severity + "':'" + message + ", hora:" + LocalDateTime.now() + "'");
         }
     }
     private static String getSeverity(String[] strings) {

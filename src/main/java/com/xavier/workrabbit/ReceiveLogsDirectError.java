@@ -5,6 +5,8 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
 
+import java.time.LocalDateTime;
+
 public class ReceiveLogsDirectError {
 
     private static final String EXCHANGE_NAME = "direct_logs";
@@ -31,7 +33,7 @@ public class ReceiveLogsDirectError {
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
             String message = new String(delivery.getBody(), "UTF-8");
             System.out.println(" [x] Recebido: '" +
-                    delivery.getEnvelope().getRoutingKey() + "':'" + message + "'");
+                    delivery.getEnvelope().getRoutingKey() + "':'" + message + ", hora:" + LocalDateTime.now() + "'");
         };
         channel.basicConsume(queueName, true, deliverCallback, consumerTag -> { });
     }
